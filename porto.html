@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Samuel Portfolio</title>
+
+<style>
+.badge {
+  background: #0f172a;
+  padding: 5px 10px;
+  border-radius: 8px;
+  margin-right: 5px;
+  font-size: 0.8em;
+  border: 1px solid cyan;
+}
+/* GLOBAL */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: #020617;
+  color: white;
+  overflow-x: hidden;
+}
+
+/* BACKGROUND GRID */
+body::before {
+  content: "";
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(#0f172a 1px, transparent 1px),
+              linear-gradient(90deg, #0f172a 1px, transparent 1px);
+  background-size: 40px 40px;
+  opacity: 0.2;
+  z-index: -1;
+}
+
+/* SLIDE */
+.slide {
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  padding: 60px;
+  box-sizing: border-box;
+  opacity: 0;
+  transform: translateX(100px);
+  transition: all 0.6s ease;
+
+  overflow-y: auto;
+}
+
+.active {
+  opacity: 1;
+  transform: translateX(0);
+  z-index: 1;
+}
+
+/* HERO */
+.hero {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.hero h1 {
+  font-size: 3em;
+}
+
+.btn {
+  margin-top: 20px;
+  padding: 12px 25px;
+  background: linear-gradient(45deg, cyan, blue);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  color: white;
+  font-weight: bold;
+}
+
+/* GLASS CARD */
+.card {
+  background: rgba(30, 41, 59, 0.6);
+  backdrop-filter: blur(10px);
+  padding: 20px;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px cyan;
+}
+
+/* PROJECT GRID */
+.projects {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+/* BACK BUTTON */
+.back {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background: #1e293b;
+  border-radius: 10px;
+  cursor: pointer;
+  display: inline-block;
+}
+
+/* TITLE */
+h2 {
+  margin-bottom: 20px;
+}
+
+/* CONTENT BOX */
+.content-box {
+  max-width: 700px;
+}
+
+/* FADE IN TEXT */
+.fade {
+  animation: fadeIn 1s ease;
+}
+
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+/* HERO LAYOUT BARU */
+.hero-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 50px;
+  height: 100%;
+}
+
+/* FOTO */
+.hero-left {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.profile-img {
+  width: 180px;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 50%;
+
+  border: 3px solid cyan;
+  box-shadow: 0 0 25px cyan;
+}
+
+/* TEKS */
+.hero-right {
+  flex: 1;
+}
+
+.hero-right h1 {
+  font-size: 2.5em;
+}
+
+.hero-right p {
+  margin-top: 10px;
+  color: #94a3b8;
+}
+
+.image-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.image-gallery img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+#lightbox {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.95);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+#lightbox img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  animation: zoomIn 0.3s ease;
+}
+
+@keyframes zoomIn {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .hero-container {
+    flex-direction: column;
+    text-align: center;
+  }
+  .projects {
+    grid-template-columns: 1fr;
+  }
+    .tooltip-text {
+    position: static;
+    opacity: 1;
+    transform: none;
+    margin-top: 5px;
+  }
+
+  .exp-container {
+  flex-direction: column;
+}
+
+.exp-right img {
+  width: 100%;
+  max-width: 300px;
+}
+}
+
+
+.close-btn {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  font-size: 30px;
+  color: white;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+/* EXPERIENCE SECTION */
+.experience-section {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.exp-title {
+  font-size: 3em;
+  color: cyan;
+}
+
+.exp-container {
+  display: flex;
+  gap: 40px;
+  margin-top: 20px;
+}
+
+.exp-left {
+  flex: 1;
+}
+
+.exp-left ul {
+  line-height: 1.8;
+}
+
+.exp-right {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.exp-right img {
+  width: 250px;
+  border-radius: 20px;
+  box-shadow: 0 0 20px cyan;
+}
+
+/* PROJECT SECTION */
+.project-section {
+  min-height: 100vh;
+  padding-top: 50px;
+}
+
+/* SCROLL HINT */
+.scroll-hint {
+  margin-top: 20px;
+  opacity: 0.6;
+  animation: bounce 1.5s infinite;
+}
+
+@keyframes bounce {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(10px); }
+}
+
+/* TOOLTIP */
+.tooltip {
+  position: relative;
+  cursor: pointer;
+}
+
+.tooltip-text {
+  position: absolute;
+  bottom: 120%;
+  left: 0;
+
+  background: rgba(15, 23, 42, 0.95);
+  color: white;
+  padding: 10px 15px;
+  border-radius: 8px;
+
+  font-size: 0.9em;
+  width: 250px;
+
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(10px);
+  transition: 0.3s;
+
+  box-shadow: 0 0 15px cyan;
+}
+
+/* MUNCUL SAAT HOVER */
+
+.tooltip:hover .tooltip-text {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* CONTACT SECTION */
+.contact-section {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+.contact-section h2 {
+  font-size: 2.5em;
+  margin-bottom: 10px;
+}
+
+.contact-buttons {
+  margin-top: 20px;
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* BUTTON CONTACT */
+.btn-contact {
+  padding: 12px 25px;
+  background: linear-gradient(45deg, cyan, blue);
+  border-radius: 10px;
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.btn-contact:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px cyan;
+}
+
+/* DOWNLOAD BUTTON */
+.btn-download {
+  padding: 12px 25px;
+  background: transparent;
+  border: 2px solid cyan;
+  border-radius: 10px;
+  color: cyan;
+  font-weight: bold;
+  transition: 0.3s;
+  text-decoration: none;
+}
+
+.btn-download:hover {
+  background: cyan;
+  color: black;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- SLIDE 1 -->
+<section id="slide1" class="slide active">
+<div class="hero fade">
+
+<div class="hero-container">
+
+<!-- FOTO -->
+<div class="hero-left">
+  <img src="assets/SAM.jpg" class="profile-img">
+</div>
+
+<!-- TEKS -->
+ <div class="hero-right">
+  <h1>Samuel Bernandri Rumapea</h1>
+ <p>
+Instrumentation Engineer with hands-on experience in PLC automation,
+sensor systems, and industrial measurement tools.
+</p>
+
+ <button class="btn" onclick="goToSlide('slide2')">
+   Start Slide
+ </button>
+
+    </div>
+
+  </div>
+
+</div>
+</section>
+
+<!-- SLIDE 2 -->
+<section id="slide2" class="slide">
+
+  <!-- ===================== -->
+  <!-- SECTION 1: PENGALAMAN -->
+  <!-- ===================== -->
+  <div class="experience-section">
+
+    <h1 class="exp-title">EXPERIENCE</h1>
+
+    <div class="exp-container">
+
+      <div class="exp-left">
+
+        <h3>Work Experience</h3>
+<ul>
+  <li class="tooltip">
+    Instrumentation Laboratory Assistant Coordinator 2025
+    <span class="tooltip-text">
+     <b>Jobdesk:</b><br>
+     - Led laboratory assistants<br>
+     - Coordinated all laboratory sessions<br>
+     - Ensured all lab activities ran efficiently and optimally
+    </span>
+  </li>
+
+  <li class="tooltip">
+    PLC Instructor & Lab Assistant 2025
+    <span class="tooltip-text">
+    <b>Jobdesk:</b><br>
+     - Taught PLC fundamentals, Ladder Diagrams, and advanced PLC functions<br>
+     - Ensured the competency and understanding of lab participants<br>
+     - Assessed students based on examination standards approved by lecturers and the lab assistant team
+    </span>
+  </li>
+
+  <li class="tooltip">
+    Delivery Control Staff Intern PT Astra Honda Motor
+    <span class="tooltip-text">
+      <b>Jobdesk:</b><br>
+      - Involved in supply chain monitoring activities <br>
+      - Contributed to the automation of incoming raw material measurement systems
+    </span>
+  </li>
+</ul>
+
+    <h3>Organizational Experience</h3>
+    <ul>
+    <li class="tooltip">
+    Head of Scientific Division Himpunan Mahasiswa Fisika Brawijaya University 2024
+    <span class="tooltip-text">
+      <b>Jobdesk:</b><br>
+      - Developed and supported the academic capabilities of Physics students at Universitas Brawijaya<br>
+      - Facilitated preparation programs for Midterm and Final Exams<br>
+      - Organized a national-level high school Physics competition
+    </span>
+  </li>
+  <li class="tooltip">
+    Staff Electrical Physics Robotic Club 2024
+    <span class="tooltip-text">
+      <b>Jobdesk:</b><br>
+      - Responsible for wiring and installation of competition robots developed by the club
+    </span>
+  </li>
+  <li class="tooltip">
+    Supervisory Committee of Venue, Security, Logistics, and Transportation – PHILS Camp 2024
+    <span class="tooltip-text">
+      <b>Jobdesk:</b><br>
+      - Ensured the Venue, Security, Logistics, and Transportation Division operated according to its designated functions<br>
+      - Ensured the camping venue met required standards<br>
+      - Maintained effective communication within the Venue, Security, Logistics, and Transportation Division<br>
+      - Ensured transportation arrangements for the camping event met required standards
+    </span>
+  </li>
+   <li class="tooltip">
+    Deputy Coordinator of Venue, Security, Logistics, and Transportation – PHILS Camp 2023
+    <span class="tooltip-text">
+      <b>Jobdesk:</b><br>
+      - Responsible for securing the venue for the Christian freshman camp of the Faculty of Mathematics and Natural Sciences<br>
+      - Ensured safety and security throughout the camp activities<br>
+      - Managed transportation for both participants and organizing committee during the event<br>
+      - Oversaw logistics and supplies required for both committee members and participants
+    </span>
+      </ul>
+
+      </div>
+
+      <div class="exp-right">
+        <img src="assets/PLC1.jpg">
+      </div>
+
+    </div>
+
+    <p class="scroll-hint">⬇ Scroll Down</p>
+
+  </div>
+
+  <!-- ===================== -->
+  <!-- SECTION 2: PROJECT -->
+  <!-- ===================== -->
+  <div class="project-section">
+
+    <h2>🚀 Project Experience</h2>
+
+    <div class="projects">
+      <div class="card" onclick="goToSlide('slide3')">Conveyor Sorting System</div>
+      <div class="card" onclick="goToSlide('slide4')">Pneumatic PLC System</div>
+      <div class="card" onclick="goToSlide('slide5')">Cylinder Head Automation</div>
+      <div class="card" onclick="goToSlide('slide6')">Laptop Chatbot</div>
+      <div class="card" onclick="goToSlide('slide7')">Tempered Glass</div>
+    </div>
+    <p class="scroll-hint">⬇ Scroll Down</p>
+  </div>
+<!-- ===================== -->
+<!-- SECTION 3: CONTACT -->
+<!-- ===================== -->
+<div class="contact-section">
+
+   <h2>📬 Contact Me</h2>
+
+  <p>Interested to collaborate or discuss opportunities?</p>
+
+  <div class="contact-buttons">
+
+    <a href="mailto:sbrumapea11@gmail.com" class="btn-contact">
+      Email Me
+    </a>
+
+    <a href="https://linkedin.com/in/Samuel Bernandri" target="_blank" class="btn-contact">
+      LinkedIn
+    </a>
+
+    <a href="assets/CV Samuel Bernandri Rumapea 2026.pdf" download class="btn-download">
+      Download CV
+    </a>
+
+  </div>
+
+  <p style="margin-top:20px; opacity:0.6;">
+    © Samuel Bernandri Rumapea - 2026
+  </p>
+
+</div>
+</div>
+
+</section>
+
+<!-- SLIDE 3 -->
+<section id="slide3" class="slide">
+  <div class="content-box fade">
+    <h2>Conveyor Sorting System</h2>
+    <div class="image-gallery">
+  <img src="assets/CON1.jpg" onclick="openImage(this)">
+  <img src="assets/CON2.jpg" onclick="openImage(this)">
+  <img src="assets/CON3.jpg" onclick="openImage(this)">
+</div>
+    <p>Sorting tomato & apple based on ripeness using color sensor.</p>
+    <p>
+      <span class="badge">Arduino</span>
+      <span class="badge">Sensor</span>
+      <span class="badge">Automation</span>
+    </p>
+    <p>Role :</p>
+    <ul>
+      <li>Drawing Design Project Skill</li>
+      <li>Microcontroller Programming</li>
+      <li>DC Motor Control</li>
+      <li>Team Management</li>
+    </ul>
+    <p><b>Highlight:</b> Real-time classification system using sensor calibration.</p>
+    <div class="back" onclick="goToSlide('slide2')">⬅ Back</div>
+  </div>
+</section>
+
+<!-- SLIDE 4 -->
+<section id="slide4" class="slide">
+  <div class="content-box fade">
+    <h2>Pneumatic PLC System</h2>
+    <div class="image-gallery">
+  <img src="assets/PLC1.jpg" onclick="openImage(this)">
+  <img src="assets/PLC2.jpg" onclick="openImage(this)">
+  <img src="assets/PLC3.jpg" onclick="openImage(this)">
+  <img src="assets/PLC4.jpg" onclick="openImage(this)">
+  <img src="assets/PLC5.jpg" onclick="openImage(this)">
+</div>
+    <p>Automated bottle sorting system using PLC Omron CP1E.</p>
+    <p>
+      <span class="badge">Programmable Logic Controller,</span>
+      <span class="badge">Pneumatic</span>
+      <span class="badge">Control System</span>
+    </p>
+    <p>Role :</p>
+    <ul>
+      <li>PLC Programming</li>
+      <li>Electro Pneumatic</li>
+      <li>PLC Installation</li>
+    </ul>
+
+    <p><b>Highlight:</b> Integrated control system combining mechanical & electrical automation.</p>
+
+    <div class="back" onclick="goToSlide('slide2')">⬅ Back</div>
+  </div>
+</section>
+
+<!-- SLIDE 5 -->
+<section id="slide5" class="slide">
+  <div class="content-box fade">
+    <h2>Measurement Cylinder Head Automation</h2>
+    <div class="image-gallery">
+  <img src="assets/CH1.jpg" onclick="openImage(this)">
+  <img src="assets/CH2.jpg" onclick="openImage(this)">
+  <img src="assets/CH3.jpg" onclick="openImage(this)">
+  <img src="assets/CH4.jpg" onclick="openImage(this)">
+  <img src="assets/CH5.jpg" onclick="openImage(this)">
+</div>
+    <p>Automated measurement system using VL53L0X sensor.</p>
+    <p>
+      <span class="badge">Arduino</span>
+      <span class="badge">VL53L0X Sensor</span>
+      <span class="badge">Calibration Sensor</span>
+    </p>
+    <p>Role :</p>
+    <ul>
+      <li>Arduino Programming</li>
+      <li>Sensor Calibration</li>
+      <li>Servo Control</li>
+      <li>Accuracy improved: +98%</li>
+      <li>Processing time reduced: -53,54%</li>
+    </ul>
+    <p><b>Why it matters:</b> The system demonstrates an average measurement deviation of 0.05 mL, a 0.12% error rate, and an RMSE of 0.06 mL, indicating stable, precise, and consistent performance. It also improves time efficiency by 53.54%.</p>
+    <p><b>Highlight:</b> Improved manual measurement tool stability cylinder head in manufacture industry with offset calibration and automatic system.</p>
+    <div class="back" onclick="goToSlide('slide2')">⬅ Back</div>
+  </div>
+</section>
+
+<!-- SLIDE 6 -->
+<section id="slide6" class="slide">
+    <div class="image-gallery">
+  <img src="assets/CB.jpg" onclick="openImage(this)">
+  <div class="content-box fade">
+    <h2>Laptop Recommendation Chatbot</h2>
+    <p>Role :</p>
+    <li>Product Manager</li>
+    <p>🎥 Demo:
+    <br>
+    <a href="https://www.instagram.com/reel/Cs1OfA8s0kS/" target="_blank">CHATBOT EXPLANATION VIDEO</a></p>
+    <a href="https://app.smojo.org/fadhel/Byuty" target="_blank">Link Chatbot</a></p>
+    <p>
+      <span class="badge">AI Chatbot</span>
+    </p>
+    <p><b>Highlight:</b> Recommendation system based on budget & needs.</p>
+
+    <div class="back" onclick="goToSlide('slide2')">⬅ Back</div>
+  </div>
+</section>
+
+<!-- SLIDE 7 -->
+<section id="slide7" class="slide">
+    <div class="image-gallery">
+  <img src="assets/PKM.jpg" onclick="openImage(this)">
+  <div class="content-box fade">
+    <h2>Tempered Glass Innovation</h2>
+    <p>Anti-spy & blue light radiation protection.</p>
+    <p>
+      <span class="badge">Material Research</span>
+      <span class="badge">3D Design</span>
+    </p>
+    <p>Role :</p>
+    <ul>
+      <li>Material Researcher</li>
+      <li>3D Designer</li>
+    </ul>
+
+    <p><b>Highlight:</b> Focus on user privacy & eye protection.</p>
+
+    <div class="back" onclick="goToSlide('slide2')">⬅ Back</div>
+  </div>
+</section>
+
+<!-- LIGHTBOX -->
+<div id="lightbox" onclick="closeImage()">
+  <span class="close-btn">✖</span>
+  <img id="lightbox-img">
+</div>
+
+<script>
+let slides = ["slide1","slide2","slide3","slide4","slide5","slide6","slide7"];
+let current = 0;
+
+function goToSlide(id) {
+  document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  current = slides.indexOf(id);
+}
+
+function openImage(img) {
+  document.getElementById("lightbox").style.display = "flex";
+  document.getElementById("lightbox-img").src = img.src;
+}
+
+function closeImage() {
+  document.getElementById("lightbox").style.display = "none";
+}
+
+/* KEYBOARD NAVIGATION */
+document.addEventListener("keydown", (e) => {
+  if (e.key === "ArrowRight") {
+    current = Math.min(current + 1, slides.length - 1);
+    goToSlide(slides[current]);
+  }
+  if (e.key === "ArrowLeft") {
+    current = Math.max(current - 1, 0);
+    goToSlide(slides[current]);
+  }
+});
+</script>
+
+</body>
+</html> 
